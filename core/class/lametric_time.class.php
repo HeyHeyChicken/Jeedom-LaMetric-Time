@@ -302,7 +302,7 @@ class lametric_timeCmd extends cmd {
         if($ip == ""){
 	         message::add('LaMetric Time', "Vous n'avez pas fourni l'IP de votre LaMetric Time.");
         }
-        $apikey  = $eqlogic->getConfiguration('api_token', ''); // "79c679f156084388b118bc6400a7cb435d077e0fe66fb99210c740eb3e4eae98"
+        $apikey  = $eqlogic->getConfiguration('api_token', '');
         if($apikey == ""){
 	         message::add('LaMetric Time', "Vous n'avez pas fourni la clé API de votre LaMetric Time.");
         }
