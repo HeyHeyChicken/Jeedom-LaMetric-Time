@@ -234,10 +234,74 @@ class lametric_time extends eqLogic {
   }
   */
 
-  /*
-  * Permet de modifier l'affichage du widget (également utilisable par les commandes)
-  public function toHtml($_version = 'dashboard') {}
-  */
+  private function GetSonList(){
+    return array(
+      array("cash", "Argent"),
+      array("cat", "Chat"),
+      array("dog", "Chien 1"),
+      array("dog2", "Chien 2"),
+      array("lose1", "Defaite 1"),
+      array("lose2", "Defaite 2"),
+      array("water1", "Eau 1"),
+      array("water2", "Eau 2"),
+      array("letter_email", "Email"),
+      array("energy", "Energie"),
+      array("negative1", "Negatif 1"),
+      array("negative2", "Negatif 2"),
+      array("negative3", "Negatif 3"),
+      array("negative4", "Negatif 4"),
+      array("negative5", "Negatif 5"),
+      array("notification", "Notification 1"),
+      array("notification2", "Notification 2"),
+      array("notification3", "Notification 3"),
+      array("notification4", "Notification 4"),
+      array("open_door", "Ouverture porte"),
+      array("positive1", "Positif 1"),
+      array("positive2", "Positif 2"),
+      array("positive3", "Positif 3"),
+      array("positive4", "Positif 4"),
+      array("positive5", "Positif 5"),
+      array("positive6", "Positif 6"),
+      array("statistic", "Statistique"),
+      array("knock-knock", "Toc toc"),
+      array("thunder", "Tonnerre"),
+      array("bicycle", "Vélo"),
+      array("wind", "Vent"),
+      array("wind_short", "Vent court"),
+      array("win", "Victoire 1"),
+      array("win2", "Victoire 2"),
+      array("car", "Voiture")
+    );
+  }
+
+  // Permet de modifier l'affichage du widget (également utilisable par les commandes)
+  public function toHtml($_version = 'dashboard') {
+    $this->emptyCacheWidget(); //vide le cache
+    $replace = $this->preToHtml($_version); // remplacement des tag jeedom (ex : #id#, #uid# ...)
+    if (!is_array($replace))  {
+      return $replace;
+    }
+    $version = jeedom::versionAlias($_version); // version dashbord ou mobile
+
+    $options = "";
+    foreach(GetSonList() as $option){
+      $options .= "<option value='".$option[0]."'>".$option[1]."</option>";
+    }
+    $replace['#options#'] = $options;
+    /* Tag perso */
+    /*
+    $replace['#message_placeholder#'] = "message";
+    $replace['#message#'] = "";
+    $replace['#title_disable#'] = '1';
+    */
+    $cmd = lametric_timeCmd::byEqLogicIdAndLogicalId($this->getId(),'Message'); // recherche id de la commande action/message
+    if (is_object($cmd)){
+      $replace['#message_id#'] = $cmd->getId();
+    }
+
+    $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'cmd.action.other.template', __CLASS__))); // remplacement des tag
+    return translate::exec($html, '/plugins/' . __CLASS__ . '/core/template/' . $version . '/LaMetricTimeTemplate.html'); // translate
+  }
 
   /*
   * Permet de déclencher une action avant modification d'une variable de configuration du plugin
