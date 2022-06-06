@@ -78,113 +78,6 @@ class lametric_time extends eqLogic {
 
   // Fonction exécutée automatiquement après la création de l'équipement
   public function postInsert() {
-    // INFO - MESSAGE
-    $info_message = $this->getCmd(null, "_message");
-    if (!is_object($info_message)) {
-      $info_message = new lametric_timeCmd();
-      $info_message->setName(__("_Message", __FILE__));
-    }
-    $info_message->setLogicalId("_message");
-    $info_message->setEqLogic_id($this->getId());
-    $info_message->setType("info");
-    $info_message->setSubType("string");
-    $info_message->setIsVisible(1);
-    $info_message->save();
-
-    // ACTION - EDIT MESSAGE
-    $action_message = $this->getCmd(null, "message");
-    if (!is_object($action_message)) {
-      $action_message = new lametric_timeCmd();
-      $action_message->setName(__("Message", __FILE__));
-    }
-    $action_message->setEqLogic_id($this->getId());
-    $action_message->setLogicalId("message");
-    $action_message->setType("action");
-    $action_message->setSubType("message");
-    $action_message->setIsVisible(1);
-    $action_message->setDisplay("title_disable", 1);
-    $action_message->save();
-
-    $action_message->setTemplate('dashboard','tile');
-    $action_message->setTemplate('mobile','tile');
-
-    // INFO - SON
-    $info_son = $this->getCmd(null, "_son");
-    if (!is_object($info_son)) {
-      $info_son = new lametric_timeCmd();
-      $info_son->setName(__("_Son", __FILE__));
-    }
-    $info_son->setLogicalId("_son");
-    $info_son->setEqLogic_id($this->getId());
-    $info_son->setType("info");
-    $info_son->setSubType("string");
-    $info_son->setIsVisible(1);
-    $info_son->save();
-
-    // ACTION - EDIT SON
-    $action_son = $this->getCmd(null, "son");
-    if (!is_object($action_son)) {
-      $action_son = new lametric_timeCmd();
-      $action_son->setName(__("Son", __FILE__));
-    }
-    $action_son->setEqLogic_id($this->getId());
-    $action_son->setLogicalId("son");
-    $action_son->setType("action");
-    $action_son->setSubType("select");
-    $notifications = array(
-      "cash|Argent",
-      "cat|Chat",
-      "dog|Chien 1",
-      "dog2|Chien 2",
-      "lose1|Defaite 1",
-      "lose2|Defaite 2",
-      "water1|Eau 1",
-      "water2|Eau 2",
-      "letter_email|Email",
-      "energy|Energie",
-      "negative1|Negatif 1",
-      "negative2|Negatif 2",
-      "negative3|Negatif 3",
-      "negative4|Negatif 4",
-      "negative5|Negatif 5",
-      "notification|Notification 1",
-      "notification2|Notification 2",
-      "notification3|Notification 3",
-      "notification4|Notification 4",
-      "open_door|Ouverture porte",
-      "positive1|Positif 1",
-      "positive2|Positif 2",
-      "positive3|Positif 3",
-      "positive4|Positif 4",
-      "positive5|Positif 5",
-      "positive6|Positif 6",
-      "statistic|Statistique",
-      "knock-knock|Toc toc",
-      "thunder|Tonnerre",
-      "bicycle|Vélo",
-      "wind|Vent",
-      "wind_short|Vent court",
-      "win|Victoire 1",
-      "win2|Victoire 2",
-      "car|Voiture"
-    );
-    $action_son->setConfiguration("listValue", join(";", $notifications));
-    $action_son->setIsVisible(1);
-    $action_son->save();
-
-    // ACTION - REFRESH
-    $action_refresh = $this->getCmd(null, "refresh");
-    if (!is_object($action_refresh)) {
-      $action_refresh = new lametric_timeCmd();
-      $action_refresh->setName(__("Rafraichir", __FILE__));
-    }
-    $action_refresh->setEqLogic_id($this->getId());
-    $action_refresh->setLogicalId("refresh");
-    $action_refresh->setType("action");
-    $action_refresh->setSubType("other");
-    $action_refresh->setIsVisible(1);
-    $action_refresh->save();
-
     // ACTION - ENVOYER
     $action_envoyer = $this->getCmd(null, "envoyer");
     if (!is_object($action_envoyer)) {
@@ -236,6 +129,7 @@ class lametric_time extends eqLogic {
 
   private function GetSonList(){
     return array(
+      array("", ""),
       array("cash", "Argent"),
       array("cat", "Chat"),
       array("dog", "Chien 1"),
@@ -288,18 +182,13 @@ class lametric_time extends eqLogic {
       $options .= "<option value='".$option[0]."'>".$option[1]."</option>";
     }
     $replace['#options#'] = $options;
-    /* Tag perso */
-    /*
-    $replace['#message_placeholder#'] = "message";
-    $replace['#message#'] = "";
-    $replace['#title_disable#'] = '1';
-    */
-    $cmd = lametric_timeCmd::byEqLogicIdAndLogicalId($this->getId(),'Message'); // recherche id de la commande action/message
+
+    $cmd = lametric_timeCmd::byEqLogicIdAndLogicalId($this->getId(),'envoyer'); // recherche id de la commande action/message
     if (is_object($cmd)){
-      $replace['#message_id#'] = $cmd->getId();
+      $replace['#envoyer_id#'] = $cmd->getId();
     }
 
-    $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'cmd.action.other.template', __CLASS__))); // remplacement des tag
+    $html = $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'LaMetricTimeTemplate', __CLASS__))); // remplacement des tag
     return translate::exec($html, '/plugins/' . __CLASS__ . '/core/template/' . $version . '/LaMetricTimeTemplate.html'); // translate
   }
 
@@ -348,31 +237,34 @@ class lametric_timeCmd extends cmd {
     $eqlogic = $this->getEqLogic();
     switch ($this->getLogicalId()) {
       case "envoyer":
-  	    $message = "OK";
+  	    $message = $_options["message"];
 
-        $icon = 1000;
+        $icon = $_options["icone"];
 
-        $sound = ',
-              "sound": {
-                  "category":"notifications",
-                  "id":"' . "dog" . '",
-                  "repeat":1
-              }';
-
-        // settings
-        $header  = array("Content-Type: application/json");
+        $sound = "";
+        if($_options["son"] != ""){
+          $sound = ',
+            "sound": {
+                "category":"notifications",
+                "id":"' . $_options["son"] . '",
+                "repeat":1
+            }';
+        }
 
         $ip  = $eqlogic->getConfiguration('ip', '');
         if($ip == ""){
 	         message::add('LaMetric Time', "Vous n'avez pas fourni l'IP de votre LaMetric Time.");
+           return;
         }
         $apikey  = $eqlogic->getConfiguration('api_token', '');
         if($apikey == ""){
 	         message::add('LaMetric Time', "Vous n'avez pas fourni la clé API de votre LaMetric Time.");
+           return;
         }
 
+        // settings
+        $header  = array("Content-Type: application/json");
         $url     = "http://" . $ip . ":8080/api/v2/device/notifications";
-
         $post    = '{
           "priority": "critical",
           "icon_type":"none",

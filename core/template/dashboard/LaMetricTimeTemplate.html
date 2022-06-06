@@ -1,36 +1,104 @@
-<div class="eqLogic-widget eqLogic allowResize" style="width: #width#;height: #height#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" data-category="#category#">
+<style>
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone{
+    margin-bottom: 15px;
+    position: relative;
+    height: 28px;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone > input{
+    margin-bottom: 15px;
+    float: left;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone.previewed > input{
+    width: calc(100% - 28px - 15px);
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone > a{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 28px;
+    width: 28px;
+    line-height: 28px;
+    text-align: center;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone.previewed > a{
+    right: calc(15px + 28px);
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone > .img{
+    margin-left: 15px;
+    height: 28px;
+    width: 28px;
+    float: left;
+    position: relative;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone:not(.previewed) > .img{
+    display: none;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone > .img > div{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+  }
+</style>
+
+<div class="eqLogic-widget eqLogic allowResize" style="width: #width#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" data-category="#category#">
   <center class="widget-name"><span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
     <a href="#eqLink#" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
   </center>
-  <div class="content-lg">
+  <div class="content-lg" style="padding:0px 15px 15px 15px;">
     <!-- INPUT (MESSAGE) -->
-    <input class="form-control input-sm message" placeholder="#message_placeholder#" data-cmd_id="#id#" value="#message#"/>
+    <span class="cmdName" style="font-size:11px">Message</span>
+    <input style="margin-bottom: 10px;" class="form-control input-sm message" placeholder="Votre message..." data-cmd_id="#id#" type="text" />
     <!-- SELECT (SON) -->
-    <div class="cmd cmd-widget reportModeHidden" data-type="action" data-subtype="select" data-template="default" data-cmd_id="56" data-cmd_uid="cmd56__897662569__" data-version="dashboard" data-eqlogic_id="3">
-      <div class="title ">
-        <div class="cmdName">Son</div>
-      </div>
-      <div class="content-xs">
-        <select class="selectCmd son">
-          #options#
-        </select>
+    <span class="cmdName" style="font-size:11px">Son</span>
+    <select class="selectCmd son" style="margin-bottom: 10px;font-size:12px!important;background-color:var(--form-bg-color) !important;height:28px;">
+      #options#
+    </select>
+    <!-- INPUT (ICONE) -->
+    <span class="cmdName" style="font-size:11px">Icone</span>
+    <div class="icone">
+      <input class="form-control input-sm" rows="2" placeholder="ID de l'icone..." data-cmd_uid="#uid#" data-cmd_id="#id#" type="number" />
+      <a href="https://developer.lametric.com/icons" target="_blank">?</a>
+      <div class="img">
+        <div class="png"></div>
+        <div class="gif"></div>
       </div>
     </div>
-      <!-- INPUT (ICONE) -->
-    <input class="form-control input-sm icone" rows="2" placeholder="#icone_placeholder#" data-cmd_uid="#uid#" data-cmd_id="#id#" value="#icone#"/>
-      <!-- BOUTON (ENVOYER) -->
-    <a class='btn btn-xs execute'>Envoyer</a>
+    <!-- BOUTON (ENVOYER) -->
+    <a class='btn btn-xs execute' style="width: 100%;">Envoyer</a>
   </div>
   <script>
-    $('.eqLogic-widget[data-eqLogic_uid=#uid#]:last .execute').on('click', function() {
+    $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').on('change', function() {
+      const PARENT = $(this).closest(".icone").addClass("previewed").find("> .img");
+      PARENT.find("> .gif").style("background-image", "url(https://developer.lametric.com/content/apps/icon_thumbs/"+$(this).value()+"_icon_thumb.gif)");
+      PARENT.find("> .png").style("background-image", "url(https://developer.lametric.com/content/apps/icon_thumbs/"+$(this).value()+"_icon_thumb.png)");
+    });
+
+    $('.eqLogic-widget[data-eqLogic_uid=#uid#] .execute').on('click', function() {
+      const MESSAGE = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .message');
+      const SON = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .son');
+      const ICONE = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input');
       jeedom.cmd.execute({
-        id: '#message_id#',
+        id: '#envoyer_id#',
         value: {
-          message: $('.eqLogic-widget[data-eqLogic_uid=#uid#] .message').value(),
-          son: $('.eqLogic-widget[data-eqLogic_uid=#uid#] .son').value(),
-          icone: $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone').value()
+          message: MESSAGE.value(),
+          son: SON.value(),
+          icone: ICONE.value()
         }
-      })
-    })
+      });
+
+      MESSAGE.val("");
+      SON.val("");
+      ICONE.val("");
+    });
   </script>
 </div>
