@@ -7,7 +7,7 @@ Ce plugin Jeedom permet à l'utilisateur d'envoyer des notifications sur son LaM
 </div>
 <br>
 <div align="center">
-<img src="https://github.com/HeyHeyChicken/Assystem-Soldes-des-conges/blob/main/.github/widget.jpeg">
+<img src="https://raw.githubusercontent.com/HeyHeyChicken/Jeedom-LaMetric-Time/main/.github/widget.jpeg">
 </div>
 
 <br>
