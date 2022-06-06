@@ -1,0 +1,92 @@
+<div class="input-group input-group-sm" style="width: 100%;">
+  <span class="input-group-addon roundedLeft" style="width: 100px">Message</span>
+  <textarea class="message expressionAttr form-control ta_autosize" data-l1key="options" data-l2key="message" rows="1" style="resize:vertical;" data-cmd_id="#id#" data-uid="#uid#" placeholder="message">#message#</textarea>
+  <span class="input-group-addon hasBtn roundedRight">
+    <button class="btn btn-default roundedRight listCmdMessage" type="button" title="{{Sélectionner la commande}}"
+      data-cmd_id="#id#" data-uid="#uid#"><i class="fas fa-list-alt"></i></button>
+  </span>
+</div>
+
+<div class="input-group input-group-sm" style="width: 100%;">
+  <span class="input-group-addon roundedLeft" style="width: 100px">Son</span>
+  <textarea class="message expressionAttr form-control ta_autosize" data-l1key="options" data-l2key="son" rows="1"
+    style="resize:vertical;" data-cmd_id="#id#" data-uid="#uid#" placeholder="son">#son#</textarea>
+  <span class="input-group-addon hasBtn roundedRight">
+    <button class="btn btn-default roundedRight listCmdSon" type="button" title="{{Sélectionner la commande}}"
+      data-cmd_id="#id#" data-uid="#uid#"><i class="fas fa-list-alt"></i></button>
+  </span>
+</div>
+<div class="input-group input-group-sm" style="width: 100%;">
+  <span class="input-group-addon roundedLeft" style="width: 100px">Icone</span>
+  <textarea class="message expressionAttr form-control ta_autosize" data-l1key="options" data-l2key="icone" rows="1"
+    style="resize:vertical;" data-cmd_id="#id#" data-uid="#uid#" placeholder="icone">#icone#</textarea>
+  <span class="input-group-addon hasBtn roundedRight">
+    <button class="btn btn-default roundedRight listCmdIcone" type="button" title="{{Sélectionner la commande}}"
+      data-cmd_id="#id#" data-uid="#uid#"><i class="fas fa-list-alt"></i></button>
+  </span>
+</div>
+<script>
+  $('.listCmdMessage[data-uid=#uid#]').on('click', function () {
+    if ('#message_cmd_subtype#' != '') {
+      jeedom.cmd.getSelectModal({
+        cmd: {
+          type: '#message_cmd_type#',
+          subType: '#message_cmd_subtype#'
+        }
+      }, function (result) {
+        $('.expressionAttr[data-l1key=options][data-l2key=message][data-uid=#uid#]').atCaret('insert', result
+          .human);
+      });
+    } else {
+      jeedom.cmd.getSelectModal({
+        cmd: {
+          type: '#message_cmd_type#'
+        }
+      }, function (result) {
+        $('.expressionAttr[data-l1key=options][data-l2key=message][data-uid=#uid#]').atCaret('insert', result
+          .human);
+      });
+    }
+  });
+
+  $('.listCmdSon[data-uid=#uid#]').on('click', function () {
+    if ('#message_cmd_subtype#' != '') {
+      jeedom.cmd.getSelectModal({cmd: {type: '#message_cmd_type#',subType: '#message_cmd_subtype#'
+        }
+      }, function (result) {
+        $('.expressionAttr[data-l1key=options][data-l2key=son][data-uid=#uid#]').atCaret('insert', result.human);
+      });
+    } else {
+      jeedom.cmd.getSelectModal({
+        cmd: {
+          type: '#message_cmd_type#'
+        }
+      }, function (result) {
+        $('.expressionAttr[data-l1key=options][data-l2key=son][data-uid=#uid#]').atCaret('insert', result.human);
+      });
+    }
+  });
+
+  $('.listCmdIcone[data-uid=#uid#]').on('click', function () {
+    if ('#message_cmd_subtype#' != '') {
+      jeedom.cmd.getSelectModal({
+        cmd: {
+          type: '#message_cmd_type#',
+          subType: '#message_cmd_subtype#'
+        }
+      }, function (result) {
+        $('.expressionAttr[data-l1key=options][data-l2key=icone][data-uid=#uid#]').atCaret('insert',
+          result.human);
+      });
+    } else {
+      jeedom.cmd.getSelectModal({
+        cmd: {
+          type: '#message_cmd_type#'
+        }
+      }, function (result) {
+        $('.expressionAttr[data-l1key=options][data-l2key=icone][data-uid=#uid#]').atCaret('insert',
+          result.human);
+      });
+    }
+  });
+</script>
