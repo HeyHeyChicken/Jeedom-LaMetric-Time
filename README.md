@@ -18,7 +18,7 @@ Installez le plugin sur votre Jeedom via le menu "Gestion des plugins", "Market"
 
 ## Crédits
 
-- Merci à "Phpvarious" pour son aide et pour avoir développé la partie "scénario" du plugin.
+- Merci à [Phpvarious](//github.com/Phpvarious) pour son aide et pour avoir développé la partie "scénario" du plugin.
 
 <br>
 <br>
