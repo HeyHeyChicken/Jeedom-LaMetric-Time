@@ -284,7 +284,7 @@ class lametric_time extends eqLogic {
     $version = jeedom::versionAlias($_version); // version dashbord ou mobile
 
     $options = "";
-    foreach(GetSonList() as $option){
+    foreach($this->GetSonList() as $option){
       $options .= "<option value='".$option[0]."'>".$option[1]."</option>";
     }
     $replace['#options#'] = $options;
