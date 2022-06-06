@@ -295,6 +295,18 @@ class lametric_timeCmd extends cmd {
         break;
     }
   }
+	
+  public function getWidgetTemplateCode($_version = 'dashboard', $_clean = true, $_widgetName = '') {
+	  $data = null;
+	  if ($_version != 'scenario') return parent::getWidgetTemplateCode($_version, $_clean, $_widgetName);
+	  $data = getTemplate('core', 'scenario', 'cmd.sendMsg', 'lametric_time');
+	  if (!is_null($data)) {
+		  if (version_compare(jeedom::version(),'4.2.0','>=')) {
+			  if(!is_array($data)) return array('template' => $data, 'isCoreWidget' => false);
+		  } else return $data;
+	  }
+	  return parent::getWidgetTemplateCode($_version, $_clean, $_widgetName);
+  }
 
   /*     * **********************Getteur Setteur*************************** */
 
