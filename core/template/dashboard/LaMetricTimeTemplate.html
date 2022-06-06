@@ -77,10 +77,18 @@
     <a class='btn btn-xs execute' style="width: 100%;">Envoyer</a>
   </div>
   <script>
-    $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').on('change', function() {
-      const PARENT = $(this).closest(".icone").addClass("previewed").find("> .img");
-      PARENT.find("> .gif").style("background-image", "url(https://developer.lametric.com/content/apps/icon_thumbs/"+$(this).value()+"_icon_thumb.gif)");
-      PARENT.find("> .png").style("background-image", "url(https://developer.lametric.com/content/apps/icon_thumbs/"+$(this).value()+"_icon_thumb.png)");
+    $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').on('change keyup', function() {
+      const VALUE = $(this).value();
+      const ICON = $(this).closest(".icone");
+      const CLASS= "previewed";
+      if(VALUE == ""){
+        ICON.removeClass(CLASS);
+      }
+      else{
+        const PARENT = ICON.addClass(CLASS).find("> .img");
+        PARENT.find("> .gif").style("background-image", "url(https://developer.lametric.com/content/apps/icon_thumbs/"+VALUE+"_icon_thumb.gif)");
+        PARENT.find("> .png").style("background-image", "url(https://developer.lametric.com/content/apps/icon_thumbs/"+VALUE+"_icon_thumb.png)");
+      }
     });
 
     $('.eqLogic-widget[data-eqLogic_uid=#uid#] .execute').on('click', function() {
