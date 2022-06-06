@@ -94,7 +94,7 @@
     $('.eqLogic-widget[data-eqLogic_uid=#uid#] .execute').on('click', function() {
       const MESSAGE = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .message');
       const SON = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .son');
-      const ICONE = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input');
+      const ICONE = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone').removeClass("previewed").find('> input');
       jeedom.cmd.execute({
         id: '#envoyer_id#',
         value: {
