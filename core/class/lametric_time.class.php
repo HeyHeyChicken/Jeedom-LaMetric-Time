@@ -239,7 +239,10 @@ class lametric_timeCmd extends cmd {
       case "envoyer":
   	    $message = $_options["message"];
 
-        $icon = $_options["icone"];
+        $icon = "";
+        if($_options["icone"]!= ""){
+          $icon = '"icon":' . $_options["icone"] . ',';
+        }
 
         $sound = "";
         if($_options["son"] != ""){
@@ -271,7 +274,7 @@ class lametric_timeCmd extends cmd {
           "model": {
             "frames": [
               {
-                "icon":' . $icon . ',
+                ' . $icon . '
                 "text":"' . $message . '"
               }
             ]' . $sound . '
@@ -295,7 +298,7 @@ class lametric_timeCmd extends cmd {
         break;
     }
   }
-	
+
   public function getWidgetTemplateCode($_version = 'dashboard', $_clean = true, $_widgetName = '') {
 	  $data = null;
 	  if ($_version != 'scenario') return parent::getWidgetTemplateCode($_version, $_clean, $_widgetName);
