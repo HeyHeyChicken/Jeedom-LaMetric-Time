@@ -1,20 +1,43 @@
 <style>
-  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone{
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg{
+    padding:0px 15px 15px 15px;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .cmdName{
+    font-size:11px;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] a.btn.execute{
+    width: 100%;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .message{
+    margin-bottom: 10px;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .son{
+    margin-bottom: 10px;
+    font-size:12px!important;
+    background-color:var(--form-bg-color) !important;
+    height:28px;
+  }
+
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .icone{
     margin-bottom: 15px;
     position: relative;
     height: 28px;
   }
 
-  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone > input{
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .icone > input{
     margin-bottom: 15px;
     float: left;
   }
 
-  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone.previewed > input{
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .icone.previewed > input{
     width: calc(100% - 28px - 15px);
   }
 
-  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone > a{
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .icone > a{
     position: absolute;
     top: 0px;
     right: 0px;
@@ -24,11 +47,11 @@
     text-align: center;
   }
 
-  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone.previewed > a{
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .icone.previewed > a{
     right: calc(15px + 28px);
   }
 
-  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone > .img{
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .icone > .img{
     margin-left: 15px;
     height: 28px;
     width: 28px;
@@ -36,11 +59,11 @@
     position: relative;
   }
 
-  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone:not(.previewed) > .img{
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .icone:not(.previewed) > .img{
     display: none;
   }
 
-  .eqLogic-widget[data-eqLogic_uid="#uid#"] .icone > .img > div{
+  .eqLogic-widget[data-eqLogic_uid="#uid#"] .content-lg .icone > .img > div{
     position: absolute;
     top: 0px;
     left: 0px;
@@ -54,42 +77,45 @@
   <center class="widget-name"><span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
     <a href="#eqLink#" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
   </center>
-  <div class="content-lg" style="padding:0px 15px 15px 15px;">
+  <div class="content-lg">
     <!-- INPUT (MESSAGE) -->
-    <span class="cmdName" style="font-size:11px">Message</span>
-    <input style="margin-bottom: 10px;" class="form-control input-sm message" placeholder="Votre message..." data-cmd_id="#id#" type="text" />
+    <span class="cmdName">Message</span>
+    <input class="form-control input-sm message" placeholder="Votre message..." data-cmd_id="#id#" type="text" />
     <!-- SELECT (SON) -->
-    <span class="cmdName" style="font-size:11px">Son</span>
-    <select class="selectCmd son" style="margin-bottom: 10px;font-size:12px!important;background-color:var(--form-bg-color) !important;height:28px;">
+    <span class="cmdName">Son</span>
+    <select class="selectCmd son">
       #options#
     </select>
     <!-- INPUT (ICONE) -->
-    <span class="cmdName" style="font-size:11px">Icone</span>
+    <span class="cmdName">Icone</span>
     <div class="icone">
       <input class="form-control input-sm" rows="2" placeholder="ID de l'icone..." data-cmd_uid="#uid#" data-cmd_id="#id#" type="number" />
       <a href="https://developer.lametric.com/icons" target="_blank">?</a>
       <div class="img">
-        <div class="png"></div>
         <div class="gif"></div>
       </div>
     </div>
     <!-- BOUTON (ENVOYER) -->
-    <a class='btn btn-xs execute' style="width: 100%;">Envoyer</a>
+    <a class='btn btn-xs execute'>Envoyer</a>
   </div>
   <script>
     var Timer#id#;
-    
-    /* Fonction appeler par le setTimeout */
+
+    /*
+      Fonction appelée par le setTimeout
+      Cette fonction vérifie que l'ID de l'icone donnée par l'utilisateur existe.
+      Si elle existe, elle est affichée en preview à l'utilisateur.
+     */
     function checkImg () {
       var resultExt = 0;
       const VALUE = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').value();
       const ICON = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').closest(".icone");
       const CLASS= "previewed";
       const PARENT = ICON.addClass(CLASS).find("> .img");
-      
+
       $.ajax({
-        type: "POST", 
-        url: "../plugins/lametric_time/core/ajax/lametric_time.ajax.php", 
+        type: "POST",
+        url: "../plugins/lametric_time/core/ajax/lametric_time.ajax.php",
         data: {
           action: "getExtIcone",
           id: VALUE,
@@ -111,7 +137,7 @@
         ICON.removeClass(CLASS);
       }
     }
-    
+
     $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').on('keyup', function() {
       clearTimeout(Timer#id#);
       if($(this).value() == ""){
@@ -119,7 +145,7 @@
        }
       else
       {
-        Timer#id# = setTimeout(checkImg, 800);
+        Timer#id# = setTimeout(checkImg, 400);
       }
     });
 
