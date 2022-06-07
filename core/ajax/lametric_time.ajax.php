@@ -28,6 +28,21 @@ try {
     En V4 : autoriser l'exécution d'une méthode 'action' en GET en indiquant le(s) nom(s) de(s) action(s) dans un tableau en argument
   */
     ajax::init();
+    
+    if (init('action') == 'getExtIcone') {
+        try {
+            $extension = 0;
+            if (getimagesize('https://developer.lametric.com/content/apps/icon_thumbs/'.init("id").'_icon_thumb.gif') !== false) {
+                $extension = "gif";
+            }
+            else if (getimagesize('https://developer.lametric.com/content/apps/icon_thumbs/'.init("id").'_icon_thumb.png') !== false) {
+                $extension = "png";
+            }
+            ajax::success($extension);
+        } catch (Exception $e) {
+            ajax::error(displayExeption($e), $e->getCode());
+        }
+    }
 
 
 
