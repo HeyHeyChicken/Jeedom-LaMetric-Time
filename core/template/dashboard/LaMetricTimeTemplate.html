@@ -77,17 +77,49 @@
     <a class='btn btn-xs execute' style="width: 100%;">Envoyer</a>
   </div>
   <script>
-    $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').on('change keyup', function() {
-      const VALUE = $(this).value();
-      const ICON = $(this).closest(".icone");
+    var Timer#id#;
+    
+    /* Fonction appeler par le setTimeout */
+    function checkImg () {
+      var resultExt = 0;
+      const VALUE = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').value();
+      const ICON = $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').closest(".icone");
       const CLASS= "previewed";
-      if(VALUE == ""){
+      const PARENT = ICON.addClass(CLASS).find("> .img");
+      
+      $.ajax({
+        type: "POST", 
+        url: "../plugins/lametric_time/core/ajax/lametric_time.ajax.php", 
+        data: {
+          action: "getExtIcone",
+          id: VALUE,
+        },
+        dataType: 'json',
+        async: false,
+        error: function (request, status, error) {
+          handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+          resultExt = data.result;
+        }
+      });
+      if (resultExt != 0) {
+        PARENT.find("> .gif").style("background-image", "url(https://developer.lametric.com/content/apps/icon_thumbs/"+VALUE+"_icon_thumb."+resultExt+")");
+      }
+      else
+      {
         ICON.removeClass(CLASS);
       }
-      else{
-        const PARENT = ICON.addClass(CLASS).find("> .img");
-        PARENT.find("> .gif").style("background-image", "url(https://developer.lametric.com/content/apps/icon_thumbs/"+VALUE+"_icon_thumb.gif)");
-        PARENT.find("> .png").style("background-image", "url(https://developer.lametric.com/content/apps/icon_thumbs/"+VALUE+"_icon_thumb.png)");
+    }
+    
+    $('.eqLogic-widget[data-eqLogic_uid=#uid#] .icone > input').on('keyup', function() {
+      clearTimeout(Timer#id#);
+      if($(this).value() == ""){
+        $(this).closest(".icone").removeClass("previewed");
+       }
+      else
+      {
+        Timer#id# = setTimeout(checkImg, 800);
       }
     });
 
