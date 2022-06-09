@@ -26,6 +26,6 @@ if (!isConnect()) {
 ?>
 <form class="form-horizontal">
   <fieldset>
-    <p>Il n'y a rien à configurer ici.<br/>Je vous invite à créer un "LaMetric Time" dans l'onglet "Communication".</p>
+    <p>Il n'y a rien à configurer ici.<br/>Je vous invite à créer un équipement <a class="btn btn-info btn-xs openPluginPage" href="index.php?v=d&m=lametric_time&p=lametric_time"><i class="fas fa-share"></i> LaMetric Time</a></p>
   </fieldset>
 </form>
