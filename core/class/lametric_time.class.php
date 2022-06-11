@@ -127,7 +127,7 @@ class lametric_time extends eqLogic {
   }
   */
 
-  private function GetSonList(){
+  public function GetSonList(){
     return array(
       array("", ""),
       array("cash", "Argent"),
