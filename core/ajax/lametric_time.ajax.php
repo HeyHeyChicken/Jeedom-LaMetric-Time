@@ -43,7 +43,16 @@ try {
             ajax::error(displayExeption($e), $e->getCode());
         }
     }
-
+    
+    /* utilisé dans le template scénario */
+    if (init('action') == 'getList') {
+        try {
+            $extension = lametric_time::GetSonList();
+            ajax::success(json_encode($extension));
+        } catch (Exception $e) {
+            ajax::error(displayExeption($e), $e->getCode());
+        }
+    }
 
 
     throw new Exception(__('Aucune méthode correspondante à', __FILE__) . ' : ' . init('action'));
