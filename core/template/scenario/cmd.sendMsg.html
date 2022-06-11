@@ -7,15 +7,11 @@
   </span>
 </div>
 
-<div class="input-group input-group-sm" style="width: 100%;">
+<div class="input-group input-group-sm" style="width: 100%">
   <span class="input-group-addon roundedLeft" style="width: 100px">Son</span>
-  <textarea class="son expressionAttr form-control ta_autosize" data-l1key="options" data-l2key="son" rows="1"
-    style="resize:vertical;" data-cmd_id="#id#" data-uid="#uid#" placeholder="Son de la notfication...">#son#</textarea>
-  <span class="input-group-addon hasBtn roundedRight">
-    <button class="btn btn-default roundedRight listCmdSon" type="button" title="{{Sélectionner la commande}}"
-      data-cmd_id="#id#" data-uid="#uid#"><i class="fas fa-list-alt"></i></button>
-  </span>
+  <select class="son form-control input-sm expressionAttr roundedRight" data-l1key="options" data-l2key="son" data-cmd_id="#id#" data-uid="#uid#" placeholder="Son de la notfication..."></select>
 </div>
+
 <div class="input-group input-group-sm" style="width: 100%;">
   <span class="input-group-addon roundedLeft" style="width: 100px">Icone</span>
   <textarea class="icone expressionAttr form-control ta_autosize" data-l1key="options" data-l2key="icone" rows="1"
@@ -25,6 +21,7 @@
       data-cmd_id="#id#" data-uid="#uid#"><i class="fas fa-list-alt"></i></button>
   </span>
 </div>
+
 <script>
   //Cette fonction initalise les inputs àvide s'ils ont la valeur par defaut.
   function init_LMT_input(target, defaultValue){
@@ -39,7 +36,6 @@
     }
   }
 
-  init_LMT_input($('.son[data-uid=#uid#]')[0], "#" + "son"+ "#");
   init_LMT_input($('.icone[data-uid=#uid#]')[0], "#" + "icone"+ "#");
 
   $('.listCmdMessage[data-uid=#uid#]').on('click', function () {
@@ -104,5 +100,28 @@
           result.human);
       });
     }
+  });
+  
+  var resultExt;
+  $.ajax({
+    type: "POST", 
+        url: "../plugins/lametric_time/core/ajax/lametric_time.ajax.php", 
+        data: {
+          action: "getList",
+        },
+        dataType: 'json',
+        async: false,
+        error: function (request, status, error) {
+          handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+          resultExt = JSON.parse(data.result);
+          if (resultExt.length > 0) {
+            resultExt.forEach((item, index) => {
+              if (item[0] == "#son#") $('.son[data-uid=#uid#]').append($('<option selected>').val(item[0]).text(item[1]));
+              else $('.son[data-uid=#uid#]').append($('<option>').val(item[0]).text(item[1]));
+             })
+          }
+        }
   });
 </script>
