@@ -13,10 +13,10 @@
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
 	"maxDependancyInstallTime" : 0,
-	"changelog" : "https://jeedom.github.io/plugin-template/#language#/changelog",
-	"documentation" : "https://jeedom.github.io/plugin-template/#language#/",
-	"changelog_beta" : "https://jeedom.github.io/plugin-template/#language#/beta/changelog",
-	"documentation_beta" : "https://jeedom.github.io/plugin-template/#language#/beta/",
+	"changelog" : "https://heyheychicken.github.io/Jeedom-LaMetric-Time/#language#/changelog",
+	"documentation" : "https://heyheychicken.github.io/Jeedom-LaMetric-Time/#language#/",
+	"changelog_beta" : "https://heyheychicken.github.io/Jeedom-LaMetric-Time/#language#/beta/changelog",
+	"documentation_beta" : "https://heyheychicken.github.io/Jeedom-LaMetric-Time/#language#/beta/",
 	"link" : {
 		"forum":"Lien vers le forum"
 	},
