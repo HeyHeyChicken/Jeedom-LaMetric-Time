@@ -18,7 +18,7 @@
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
-class lametric_time extends eqLogic {
+class lametrictime extends eqLogic {
   /*     * *************************Attributs****************************** */
 
   /*
@@ -81,7 +81,7 @@ class lametric_time extends eqLogic {
     // ACTION - ENVOYER
     $action_envoyer = $this->getCmd(null, "envoyer");
     if (!is_object($action_envoyer)) {
-      $action_envoyer = new lametric_timeCmd();
+      $action_envoyer = new lametrictimeCmd();
       $action_envoyer->setName(__("Envoyer", __FILE__));
     }
     $action_envoyer->setEqLogic_id($this->getId());
@@ -183,7 +183,7 @@ class lametric_time extends eqLogic {
     }
     $replace['#options#'] = $options;
 
-    $cmd = lametric_timeCmd::byEqLogicIdAndLogicalId($this->getId(),'envoyer'); // recherche id de la commande action/message
+    $cmd = lametrictimeCmd::byEqLogicIdAndLogicalId($this->getId(),'envoyer'); // recherche id de la commande action/message
     if (is_object($cmd)){
       $replace['#envoyer_id#'] = $cmd->getId();
     }
@@ -213,7 +213,7 @@ class lametric_time extends eqLogic {
 
 }
 
-class lametric_timeCmd extends cmd {
+class lametrictimeCmd extends cmd {
   /*     * *************************Attributs****************************** */
 
   /*
@@ -302,7 +302,7 @@ class lametric_timeCmd extends cmd {
   public function getWidgetTemplateCode($_version = 'dashboard', $_clean = true, $_widgetName = '') {
 	  $data = null;
 	  if ($_version != 'scenario') return parent::getWidgetTemplateCode($_version, $_clean, $_widgetName);
-	  $data = getTemplate('core', 'scenario', 'cmd.sendMsg', 'lametric_time');
+	  $data = getTemplate('core', 'scenario', 'cmd.sendMsg', 'lametrictime');
 	  if (!is_null($data)) {
 		  if (version_compare(jeedom::version(),'4.2.0','>=')) {
 			  if(!is_array($data)) return array('template' => $data, 'isCoreWidget' => false);

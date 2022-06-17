@@ -18,13 +18,13 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après l'installation du plugin
-function lametric_time_install() {
+function lametrictime_install() {
 }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
-function lametric_time_update() {
+function lametrictime_update() {
 }
 
 // Fonction exécutée automatiquement après la suppression du plugin
-function lametric_time_remove() {
+function lametrictime_remove() {
 }

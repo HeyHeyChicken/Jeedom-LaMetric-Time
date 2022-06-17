@@ -28,7 +28,7 @@ try {
     En V4 : autoriser l'exécution d'une méthode 'action' en GET en indiquant le(s) nom(s) de(s) action(s) dans un tableau en argument
   */
     ajax::init();
-    
+
     if (init('action') == 'getExtIcone') {
         try {
             $extension = 0;
@@ -43,11 +43,11 @@ try {
             ajax::error(displayExeption($e), $e->getCode());
         }
     }
-    
+
     /* utilisé dans le template scénario */
     if (init('action') == 'getList') {
         try {
-            $extension = lametric_time::GetSonList();
+            $extension = lametrictime::GetSonList();
             ajax::success(json_encode($extension));
         } catch (Exception $e) {
             ajax::error(displayExeption($e), $e->getCode());

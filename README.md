@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/HeyHeyChicken/Jeedom-LaMetric-Time/main/plugin_info/lametric_time_icon.png" width="256">
+<img src="https://raw.githubusercontent.com/HeyHeyChicken/Jeedom-LaMetric-Time/main/plugin_info/lametrictime_icon.png" width="256">
 <br><br>
 
 Ce plugin Jeedom permet à l'utilisateur d'envoyer des notifications sur son LaMetric Time.<br>
